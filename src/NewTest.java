@@ -75,11 +75,27 @@ public class NewTest {
         assertElementHasText("//*[@resource-id='org.wikipedia:id/search_src_text']","Search Wikipedia","В поле поиска нет такого названия");
     }
 
+    /**
+     * Ex3: Тест: отмена поиска
+     */
+    @Test
+    public void testCancelSearchAfterSearch() {
+        waitForElementAndClick(By.xpath("//*[contains(@text,'Skip')]"), "Не найдена кнопка пропуска", 5);
+        waitForElementAndClick(By.xpath("//*[contains(@text,'Search Wikipedia')]"), "Не найдена строка поиска", 5);
+        waitForElementAndSendKeys(By.xpath("//*[contains(@text,'Search Wikipedia')]"), "Hello","Не найден элемент", 5);
+
+//        WebElement titleElement = waitForElementPresent(By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']"), "Не найден заголовок статьи", 10);
+//        String atrElement = titleElement.getAttribute("text");
+//        Assert.assertEquals("Не совпадает", "Hello", atrElement);
+        assertElementHasText("//*[@resource-id='org.wikipedia:id/page_list_item_title']","Hello","Не совпадает");
+        waitForElementAndClick(By.id("org.wikipedia:id/search_close_btn"), "Не найден крест закрытия", 5);
+        waitForElementNotPresent(By.id("org.wikipedia:id/search_close_btn"), "Крест закрытия найден", 5);
+    }
+
     public void assertElementHasText(String locator,String text, String errorText){
         WebElement titleElement = waitForElementPresent(By.xpath(locator), errorText, 10);
-        String atrElement = titleElement.getAttribute(text);
+        String atrElement = titleElement.getAttribute("text");
         Assert.assertEquals("Не совпадает текст", text, atrElement);
-
 
     }
 
