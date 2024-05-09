@@ -1,58 +1,20 @@
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
-import org.junit.After;
-import org.junit.Before;
+import lib.CoreTestCase;
+import lib.ui.MainPageObject;
+import lib.ui.SearchPageObject;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.net.URL;
+public class FirstTest extends CoreTestCase {
+    private MainPageObject MainPageObject;
+    protected void setUp() throws Exception{
+        super.setUp();
 
-public class FirstTest {
-    private AppiumDriver driver;
-
-    @Before
-    public void setUp() throws Exception {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("deviceName", "Android");
-        capabilities.setCapability("platformVersion", "8.0");
-        capabilities.setCapability("AutomationName", "Appium");
-        capabilities.setCapability("appPackage", "org.wikipedia");
-        capabilities.setCapability("appActivity", ".main.MainActivity");
-        capabilities.setCapability("app", "C://test/JavaAppiumAutomation/JavaAppiumAutomation/apks/org.wikipedia.apk");
-        driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        MainPageObject = new MainPageObject(driver);
     }
 
-    @After
-    public void tearDown() {
-        driver.quit();
-    }
-
-    @Test
-    public void firstTest() {
-        WebElement elementToInitSearch = driver.findElement(By.xpath("//*[contains(@text,'Search Wikipedia')]"));
-        elementToInitSearch.click();
-
-//        WebElement elementToEnterSearchLine = driver.findElement(By.xpath("//*[contains(@text,'Search…')]"));
-        WebElement elementToEnterSearchLine = waitForElementPresentByXpath(
-                "//*[contains(@text,'Search…')]",
-                "Cannot find not input",
-                5
-        );
-
-        elementToEnterSearchLine.sendKeys("Java");
-        // waitForElementPresentByXpath("//*[@resource-id='org.wikipedia:id/page_list_item_description']//*[@text='Object-oriented programming language']",
-        waitForElementPresentByXpath("//*[@resource-id='org.wikipedia:id/page_list_item_description']",
-                "Не найден локатор", 10);
-
-        System.out.println("First test run");
-    }
 
     private WebElement waitForElementPresentByXpath(String xpath, String errorMsg, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);

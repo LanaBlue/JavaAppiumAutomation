@@ -1,5 +1,6 @@
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
+import lib.CoreTestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,26 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
 
-public class SecondTest {
-    private AppiumDriver driver;
-
-    @Before
-    public void setUp() throws Exception {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("deviceName", "Android");
-        capabilities.setCapability("platformVersion", "8.0");
-        capabilities.setCapability("AutomationName", "Appium");
-        capabilities.setCapability("appPackage", "org.wikipedia");
-        capabilities.setCapability("appActivity", ".main.MainActivity");
-        capabilities.setCapability("app", "C://test/JavaAppiumAutomation/JavaAppiumAutomation/apks/org.wikipedia.apk");
-        driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-    }
-
-    @After
-    public void tearDown() {
-        driver.quit();
-    }
+public class SecondTest extends CoreTestCase {
 
     /**
      * Нахождение элемента в результате поиска
@@ -39,9 +21,7 @@ public class SecondTest {
     public void secondTest() {
 
         waitForElementByXpathAndClick("//*[contains(@text,'Search Wikipedia')]", "Не найден поиск", 5);
-
         waitForElementByXpathAndSendKeys("//*[contains(@text,'Search…')]", "Java", "Не найдено поле для ввода", 5);
-
         waitForElementPresentByXpath("//*[@resource-id='org.wikipedia:id/page_list_item_description']",
                 "Не найден элемент", 10);
 
