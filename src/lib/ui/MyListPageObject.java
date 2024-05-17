@@ -39,4 +39,5 @@ public class MyListPageObject extends MainPageObject {
         String titleOfArticle = getSavedArticleXPathByTitle(title);
         this.waitForElementPresent(By.xpath(titleOfArticle), "Cannot find saved article", 5);
     }
+
 }
